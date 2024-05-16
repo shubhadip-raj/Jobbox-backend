@@ -32,7 +32,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("select u.companyName from User u where u.userEmail=?1")
 	String getCompanyByEmail(String email);
 	@Query("select u.userId from User u where u.userEmail=?1")
-	Integer getUserIdByEmail(String email);
+	Integer getUserIdByEmail(String userEmail);
 	@Query("select u.userName from User u where u.userEmail=?1")
 	String findHrNameByEmail(String email);
 	
@@ -42,7 +42,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	String getCompanyById(int id);
 
 	
-
+	@Query("select u from User u where u.userEmail=?1")
+	public User findByUserName(String userEmail);
 //	@Query("select u.password from User u where u.userEmail=?1")
 //	String findUserPasswordByName(String email);
 //

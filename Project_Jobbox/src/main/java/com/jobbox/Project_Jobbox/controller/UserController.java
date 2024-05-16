@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,33 +24,23 @@ import com.jobbox.Project_Jobbox.service.UserService;
 @RequestMapping("/api/jobbox")
 
 public class UserController {
-	
-	@Autowired
-	public UserService  service;
 
-	
-	
-	
-	
-	
+	@Autowired
+	public UserService service;
+
 	@PostMapping("/saveUser")
 	public ResponseEntity<User> saveUser(@RequestBody User u)
-	
-	{ 
-		 
-		User user=service.saveUser(u);
-		return new ResponseEntity<User>(user, HttpStatus.OK);
-			
-	}
-	
-	
-	@GetMapping("/login")
-	public ResponseEntity<User> userLogin(@RequestParam String userEmail, @RequestParam String password)
 	{
-		User user=service.getUserByEmail(userEmail,password);
+		User user = service.saveUser(u);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+
+	}
+
+	@GetMapping("/login")
+	public ResponseEntity<User> userLogin(@RequestParam String userEmail, @RequestParam String password) {
+		User user = service.getUserByEmail(userEmail, password);
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
-	
 
 	@GetMapping("/displayUsers")
 	public ResponseEntity<List<User>> getUserPage() {
@@ -60,13 +51,12 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		return new ResponseEntity<List<User>>(usersList,HttpStatus.OK);
+
+		return new ResponseEntity<List<User>>(usersList, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/getHr")
-	public ResponseEntity<List<User>>  getHRPage() {
+	public ResponseEntity<List<User>> getHRPage() {
 		List<User> usersList = null;
 		try {
 			usersList = service.getHRList("HR");
@@ -74,59 +64,55 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		return new ResponseEntity<List<User>>(usersList, HttpStatus.OK);
 	}
-	
-
 
 	@PutMapping("/updateApprove")
-	public ResponseEntity<String> updateUser(@RequestParam  String userEmail, @RequestParam String approvedOn,@RequestParam String userStatus)
-	{
-		
-		service.updateUserStatus(userEmail,approvedOn,userStatus);
+	public ResponseEntity<String> updateUser(@RequestParam String userEmail, @RequestParam String approvedOn,
+			@RequestParam String userStatus) {
+		service.updateUserStatus(userEmail, approvedOn, userStatus);
 		return new ResponseEntity<String>("update successFull", HttpStatus.OK);
-		
+
 	}
-	
+
 	@DeleteMapping("/deleteUser")
-	public ResponseEntity<String> deleteUser(@RequestParam  String userEmail)
-	{
-		
+	public ResponseEntity<String> deleteUser(@RequestParam String userEmail) {
 		service.deleteUser(userEmail);
 		return new ResponseEntity<String>("update successFull", HttpStatus.OK);
-		
+
 	}
-	
-	@GetMapping("/getHRName")
-	public ResponseEntity<User> getHrNameByEmail(@RequestParam String userEmail)
-	{
-		User u=service.getHrNameByEmail(userEmail);
-		System.out.println(u.getUserName());
-		
-		return new ResponseEntity<User>(u,HttpStatus.OK);
-		
+
+	@GetMapping("/getHRName/{userEmail}")
+	public ResponseEntity<User> getHrNameByEmail(@PathVariable String userEmail) {
+	    User u = service.findByUserName(userEmail);
+	   // System.out.println(u.getUserName());
+	    return new ResponseEntity<User>(u, HttpStatus.OK);
 	}
-	
+
+
+	   @GetMapping("/getHRName")
+	    @CrossOrigin(origins = "http://localhost:3000") // Allow requests from this origin
+	    public ResponseEntity<?> getHRName(@RequestParam String userEmail) {
+		   User u = service.findByUserName(userEmail);
+		   // System.out.println(u.getUserName());
+		    return new ResponseEntity<User>(u, HttpStatus.OK);
+	    }
+
 	@GetMapping("/getHrByEmail")
-	public ResponseEntity<User> getHrByEmail(@RequestParam String userEmail)
-	{
-		User u=service.getHrByEmail(userEmail);
-		
+	public ResponseEntity<User> getHrByEmail(@RequestParam String userEmail) {
+		User u = service.getHrByEmail(userEmail);
 		return new ResponseEntity<User>(u, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/getCandidate")
-	public ResponseEntity<User> getCandidateEmail(@RequestParam String userEmail)
-	{
-		User u=service.getHrByEmail(userEmail);
-		
+	public ResponseEntity<User> getCandidateEmail(@RequestParam String userEmail) {
+		User u = service.getHrByEmail(userEmail);
 		return new ResponseEntity<User>(u, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/getHrEachCompany")
-	public ResponseEntity<List<User>>  getHR(@RequestParam String userEmail) {
+	public ResponseEntity<List<User>> getHR(@RequestParam String userEmail) {
 		List<User> usersList = null;
 		try {
 			usersList = service.getHRListEachCompany(userEmail);
@@ -134,43 +120,13 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		return new ResponseEntity<List<User>>(usersList, HttpStatus.OK);
 	}
 
-	
 	@GetMapping("/getUser")
-	public ResponseEntity<User> getUser(@RequestParam int userId)
-	{
+	public ResponseEntity<User> getUser(@RequestParam int userId) {
 		return new ResponseEntity<User>(service.getUser(userId), HttpStatus.OK);
 	}
-	
+
 }
-
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -3,6 +3,7 @@ package com.jobbox.Project_Jobbox.service;
 import java.util.List;
 
 import com.jobbox.Project_Jobbox.entity.Job;
+import com.jobbox.Project_Jobbox.entity.User;
 
 public interface JobService {
 
@@ -12,7 +13,7 @@ public interface JobService {
 
 	List<Job> findJobs(String jobRole);
 
-	List<Job> getJobsByHrEmail(String userEmail);
+//	List<Job> getJobsByHrEmail(String userEmail);
 
 	List<Job> getJobsByJobId(int jobId);
 

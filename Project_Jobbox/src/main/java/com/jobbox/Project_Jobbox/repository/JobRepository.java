@@ -14,12 +14,12 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
 	List<Job> findjobs(String jobRole);
 	
 	
+//
+//	@Query("select job.companyName from Job job where job.hrName=?1")
+//	String getCompamyName(String userName);
 
-	@Query("select job.companyName from Job job where job.hrName=?1")
-	String getCompamyName(String userName);
-
-	@Query("select job from Job job where job.hrEmail=?1 ")
-	List<Job> getJobsByHrEmail(String userEmail);
+//	@Query("select job from Job job where job.hrEmail=?1 ")
+//	List<Job> getJobsByHrEmail(String userEmail);
 
 
 	@Query("select job from Job job where job.jobId=?1")
@@ -34,8 +34,8 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
 	String getCompamyName(int jobId);
 
 
-	@Query("select job.hrId from Job job where job.jobId=?1")
-	int getHrIdbyJobId(int jobId);
+//	@Query("select job.hrId from Job job where job.jobId=?1")
+//	int getHrIdbyJobId(int jobId);
 
 
 	

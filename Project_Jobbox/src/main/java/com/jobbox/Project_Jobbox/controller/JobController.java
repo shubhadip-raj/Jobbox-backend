@@ -4,20 +4,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.jobbox.Project_Jobbox.entity.Job;
 import com.jobbox.Project_Jobbox.service.JobService;
@@ -29,10 +24,10 @@ public class JobController {
 	public JobService jobService;
 	
 	@PostMapping("/postingJob")
-	public ResponseEntity<Job> postJob(@RequestBody Job job)
-	{	
-		return new ResponseEntity<Job>(jobService.postJob(job), HttpStatus.CREATED);
-	}
+    public ResponseEntity<Job> postJob(@RequestBody Job job) {
+        Job savedJob = jobService.postJob(job);
+        return new ResponseEntity<>(savedJob, HttpStatus.CREATED);
+    }
 	
 	
 	@GetMapping("/displayJobs")
@@ -50,16 +45,16 @@ public class JobController {
 		
 	}
 	
-	@GetMapping("/jobsPostedByHrEmail")
-	public ResponseEntity<List<Job>> showJobbyHrEmail(@RequestParam String userEmail)	{
-		List<Job> jobs=jobService.getJobsByHrEmail(userEmail);
-		System.out.println(userEmail);
-		for(Job job:jobs)
-		{
-			System.out.println(job.toString());
-		}
-		return new ResponseEntity<List<Job>>(jobs, HttpStatus.OK);	
-	}
+//	@GetMapping("/jobsPostedByHrEmail")
+//	public ResponseEntity<List<Job>> showJobbyHrEmail(@RequestParam String userEmail)	{
+//		List<Job> jobs=jobService.getJobsByHrEmail(userEmail);
+//		System.out.println(userEmail);
+//		for(Job job:jobs)
+//		{
+//			System.out.println(job.toString());
+//		}
+//		return new ResponseEntity<List<Job>>(jobs, HttpStatus.OK);	
+//	}
 	
 	@GetMapping("/jobsPostedByHrEmaileachCompany")
 	public ResponseEntity<List<Job>> getJobbyHrEmailEchCompany(@RequestParam String userEmail)	{

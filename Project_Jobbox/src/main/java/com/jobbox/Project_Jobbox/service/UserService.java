@@ -32,8 +32,12 @@ public interface UserService {
 	String getCompanyNameById(int id);
 
 	User getUser(int userId);
+	
+	public String findHrNameByEmail(String userEmail);
+
 
 	
+	 User findByUserName(String userEmail);
 
 //	String findUserPasswordByName(String email);
 //

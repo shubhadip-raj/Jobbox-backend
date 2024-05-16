@@ -1,138 +1,195 @@
 package com.jobbox.Project_Jobbox.entity;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 public class Job {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int jobId;
-	private String jobTitle;
-	private String jobType;
-	private int hrId;
-	private String hrName;
-	private String hrEmail;
-	private String companyName;
-	private int numberOfPosition;
-	private String requirements;
-	private String location;
-	private String eligibility;
-	private String applicationDeadline;
-	private String experience;
-	private Double salary;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int jobId;
+
+    private String jobTitle;
+    private String jobType;
+
+    @Temporal(TemporalType.DATE)
+    private Date postingDate;
+
+    private String skills;
+    private int numberOfPosition;
+
+    @Temporal(TemporalType.DATE)
+    private Date applicationDeadline;
+
+    private String jobsummary;
+
+    private int userId; // Assuming userId is an integer in the User entity
+    private String userName;
+    private String userEmail;
+    private String companyName;
 	
-	
-	
-	
-	
-	
-	
-	public String getHrEmail() {
-		return hrEmail;
+
+    // Constructors, getters, setters, and toString methods
+    
+    public Job(int jobId, String jobTitle, String jobType, Date postingDate, String skills, int numberOfPosition,
+			Date applicationDeadline, String jobsummary, int userId, String userName, String userEmail,
+			String companyName) {
+		super();
+		this.jobId = jobId;
+		this.jobTitle = jobTitle;
+		this.jobType = jobType;
+		this.postingDate = postingDate;
+		this.skills = skills;
+		this.numberOfPosition = numberOfPosition;
+		this.applicationDeadline = applicationDeadline;
+		this.jobsummary = jobsummary;
+		this.userId = userId;
+		this.userName = userName;
+		this.userEmail = userEmail;
+		this.companyName = companyName;
 	}
-	public void setHrEmail(String hrEmail) {
-		this.hrEmail = hrEmail;
+
+
+	public Job() {
+		super();
 	}
-	public String getExperience() {
-		return experience;
-	}
-	public void setExperience(String experience) {
-		this.experience = experience;
-	}
-	public Double getSalary() {
-		return salary;
-	}
-	public void setSalary(Double salary) {
-		this.salary = salary;
-	}
+
+
 	public int getJobId() {
 		return jobId;
 	}
+
+
 	public void setJobId(int jobId) {
 		this.jobId = jobId;
 	}
+
+
 	public String getJobTitle() {
 		return jobTitle;
 	}
+
+
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
 	}
+
+
 	public String getJobType() {
 		return jobType;
 	}
+
+
 	public void setJobType(String jobType) {
 		this.jobType = jobType;
 	}
-	public int getHrId() {
-		return hrId;
+
+
+	public Date getPostingDate() {
+		return postingDate;
 	}
-	public void setHrId(int hrId) {
-		this.hrId = hrId;
+
+
+	public void setPostingDate(Date postingDate) {
+		this.postingDate = postingDate;
 	}
-	public String getHrName() {
-		return hrName;
+
+
+	public String getSkills() {
+		return skills;
 	}
-	public void setHrName(String hrName) {
-		this.hrName = hrName;
+
+
+	public void setSkills(String skills) {
+		this.skills = skills;
 	}
-	public String getCompanyName() {
-		return companyName;
-	}
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
+
+
 	public int getNumberOfPosition() {
 		return numberOfPosition;
 	}
+
+
 	public void setNumberOfPosition(int numberOfPosition) {
 		this.numberOfPosition = numberOfPosition;
 	}
-	public String getRequirements() {
-		return requirements;
-	}
-	public void setRequirements(String requirements) {
-		this.requirements = requirements;
-	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	
-	public String getApplicationDeadline() {
+
+
+	public Date getApplicationDeadline() {
 		return applicationDeadline;
 	}
-	public void setApplicationDeadline(String applicationDeadline) {
+
+
+	public void setApplicationDeadline(Date applicationDeadline) {
 		this.applicationDeadline = applicationDeadline;
 	}
-	
-	
-	
-	
+
+
+	public String getJobsummary() {
+		return jobsummary;
+	}
+
+
+	public void setJobsummary(String jobsummary) {
+		this.jobsummary = jobsummary;
+	}
+
+
+	public int getUserId() {
+		return userId;
+	}
+
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+
+	public String getUserName() {
+		return userName;
+	}
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Job [jobId=" + jobId + ", jobTitle=" + jobTitle + ", jobType=" + jobType + ", hrId=" + hrId
-				+ ", hrName=" + hrName + ", companyName=" + companyName + ", numberOfPosition=" + numberOfPosition
-				+ ", requirements=" + requirements + ", location=" + location + ", eligiblility=" + eligibility
-				+ ", applicationDeadline=" + applicationDeadline + "]";
+		return "Job [jobId=" + jobId + ", jobTitle=" + jobTitle + ", jobType=" + jobType + ", postingDate="
+				+ postingDate + ", skills=" + skills + ", numberOfPosition=" + numberOfPosition
+				+ ", applicationDeadline=" + applicationDeadline + ", jobsummary=" + jobsummary + ", userId=" + userId
+				+ ", userName=" + userName + ", userEmail=" + userEmail + ", companyName=" + companyName + "]";
 	}
-	public String getEligibility() {
-		return eligibility;
-	}
-	public void setEligibility(String eligibility) {
-		this.eligibility = eligibility;
-	}
+    
+    
+    
 	
-	
-	 
-	
-	
-	
-	
-	
-
 }

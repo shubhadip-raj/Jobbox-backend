@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.jobbox.Project_Jobbox.entity.Company;
 import com.jobbox.Project_Jobbox.entity.User;
+import com.jobbox.Project_Jobbox.repository.CompanyRepository;
 import com.jobbox.Project_Jobbox.repository.UserRepository;
 import com.jobbox.Project_Jobbox.service.UserService;
 
@@ -18,7 +20,8 @@ public class UserServicImpl implements UserService{
 	@Autowired
 	public BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
+	@Autowired
+	public CompanyRepository companyRepository;
 	@Override
 	public User saveUser(User user) {
 		 String plainTextPassword = user.getPassword(); // Get the plain text password
@@ -30,6 +33,7 @@ public class UserServicImpl implements UserService{
 	        	user.setPassword(hashedPassword);
 //
 //	        // Save the user with the hashed password
+	       
 	        return repository.save(user);
 	
 	}
@@ -82,14 +86,26 @@ public class UserServicImpl implements UserService{
 	}
 
 
-	@Override
-	public User getHrNameByEmail(String userEmail) {
-		
-		User u=repository.getHrNameByEmail(userEmail);
-		return u;
-		
-		
-	}
+//	@Override
+//	public User getHrNameByEmail(String userEmail) {
+//		
+//		User u=repository.getHrNameByEmail(userEmail);
+//		return u;
+//		
+//		
+//	}
+
+
+	    @Override
+	    public User getHrNameByEmail(String userEmail) {
+	        User u = repository.findByUserName(userEmail);
+	        if (u != null) {
+	            return u;
+	        } else {
+	            return null; // Handle case where user is not found
+	        }
+	    }
+
 
 
 	@Override
@@ -141,7 +157,21 @@ public class UserServicImpl implements UserService{
 		// TODO Auto-generated method stub
 		return repository.getById(userId);
 	}
+	
+	@Override
+	public String findHrNameByEmail(String userEmail) {
+	    return repository.findHrNameByEmail(userEmail);
 	}
+
+
+	@Override
+	public User findByUserName(String userEmail) {
+		// TODO Auto-generated method stub
+		return repository.findByUserName(userEmail);
+	}
+	}
+
+
 //
 //	@Override
 //	public String findUserRole(String email) {

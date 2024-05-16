@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jobbox.Project_Jobbox.entity.Company;
 import com.jobbox.Project_Jobbox.entity.Job;
+import com.jobbox.Project_Jobbox.entity.User;
+import com.jobbox.Project_Jobbox.repository.CompanyRepository;
 import com.jobbox.Project_Jobbox.repository.JobRepository;
 import com.jobbox.Project_Jobbox.repository.UserRepository;
 import com.jobbox.Project_Jobbox.service.JobService;
@@ -16,18 +19,29 @@ public class JobServiceImpl implements JobService {
 	@Autowired
 	public UserRepository userRepository;
 
+//	@Autowired
+//	public CompanyRepository companyRepository;
+//	
 	@Override
 	public Job postJob(Job job) {
-		String email=job.getHrEmail();
-		String company=userRepository.getCompanyByEmail(email);
-		int hrId=userRepository.getUserIdByEmail(email);
-	String hrName=userRepository.findHrNameByEmail(email);
-		job.setCompanyName(company);
-		job.setHrId(hrId);
-		job.setHrName(hrName);
+		String email=job.getUserEmail();
+		User user = userRepository.findUserByEmail(email);
+		//Company company = companyRepository.findCompanyByName(email);
+		job.setUserId(user.getUserId());;
+		job.setUserEmail(user.getUserEmail());
+		job.setUserName(user.getUserName());
+//		String hrEmail = user.getUserEmail();
+//		String[] emailParts = hrEmail.split("@");
+//		String domain = emailParts[1];
+//	    String[] domainParts = domain.split("\\.");
+//	    String companyName = domainParts[0];
+		job.setCompanyName(user.getCompanyName());
 		return repository.save(job);
-		
+	
 	}
+
+
+
 
 	@Override
 	public List<Job> getAllJobs() {
@@ -47,13 +61,14 @@ public class JobServiceImpl implements JobService {
 //		return repository.findjobs(jobRole);
 		return repository.findjobs(jobRole);
 	}
-
-	@Override
-	public List<Job> getJobsByHrEmail(String userEmail) {
-		//String companyName=repository.getCompamyName(userEmail);
-		
-		return repository.getJobsByHrEmail(userEmail);
-	}
+	
+	
+//	@Override
+//	public List<Job> getJobsByHrEmail(String userEmail) {
+//		//String companyName=repository.getCompamyName(userEmail);
+//		
+//		return repository.getJobsByHrEmail(userEmail);
+//	}
 
 	@Override
 	public List<Job> getJobsByJobId(int jobId) {
@@ -71,14 +86,16 @@ public class JobServiceImpl implements JobService {
 	@Override
 	public String getCompanyNameById(int jobId) {
 		// TODO Auto-generated method stub
-		return repository.getCompamyName(jobId);
+//		return repository.getCompamyName(jobId);
+		return null;
 	}
 
 
 	@Override
 	public int getHrIdbyJobId(int jobId) {
 		// TODO Auto-generated method stub
-		return repository.getHrIdbyJobId(jobId);
+//		return repository.getHrIdbyJobId(jobId);
+		return 0;
 	}
 
 	@Override
@@ -93,4 +110,5 @@ public class JobServiceImpl implements JobService {
 		return repository.getById(jobId);
 	}
 
+	
 }
