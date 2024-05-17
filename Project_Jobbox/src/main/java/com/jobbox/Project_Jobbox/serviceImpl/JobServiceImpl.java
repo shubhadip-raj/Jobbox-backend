@@ -40,7 +40,9 @@ public class JobServiceImpl implements JobService {
 	
 	}
 
-
+//	 public List<Job> getJobsByHrEmailAndCompanyName(String userEmail, String companyName) {
+//	        return repository.findByHrEmailAndCompanyName(userEmail, companyName);
+//	    }
 
 
 	@Override
@@ -62,13 +64,13 @@ public class JobServiceImpl implements JobService {
 		return repository.findjobs(jobRole);
 	}
 	
-	
-//	@Override
-//	public List<Job> getJobsByHrEmail(String userEmail) {
-//		//String companyName=repository.getCompamyName(userEmail);
-//		
-//		return repository.getJobsByHrEmail(userEmail);
-//	}
+//	
+	@Override
+	public List<Job> getJobsByHrEmail(String userEmail) {
+		//String companyName=repository.getCompamyName(userEmail);
+		
+		return repository.getJobsByHrEmail(userEmail);
+	}
 
 	@Override
 	public List<Job> getJobsByJobId(int jobId) {
@@ -104,11 +106,22 @@ public class JobServiceImpl implements JobService {
 		return repository.getJobTitleByJobId(jobId) ;
 	}
 
+
 	@Override
 	public Job getJobByJobId(int jobId) {
 		
 		return repository.getById(jobId);
 	}
-
+	public boolean updateJob(Job job) {
+		try {
+			repository.save(job);
+			return true;
+		}
+		catch (Exception e) {
+			// TODO: handle exception  
+			e.printStackTrace();
+            return false;
+		}
+	}
 	
 }

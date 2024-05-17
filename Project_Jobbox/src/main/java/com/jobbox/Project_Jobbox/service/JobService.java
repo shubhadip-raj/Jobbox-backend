@@ -13,20 +13,22 @@ public interface JobService {
 
 	List<Job> findJobs(String jobRole);
 
-//	List<Job> getJobsByHrEmail(String userEmail);
-
+List<Job> getJobsByHrEmail(String userEmail);
+public boolean updateJob(Job job) ;
 	List<Job> getJobsByJobId(int jobId);
 
 	List<Job> getJobsByHrEmailEachCompany(String userEmail);
 
 	String getCompanyNameById(int jobId);
 
-
+//	List<Job> getJobsByHrEmailAndCompanyName(String userEmail, String companyName);
 
 	int getHrIdbyJobId(int jobId);
 
 	String getJobTitleByJobId(int jobId);
 
 	Job getJobByJobId(int jobId);
+
+
 
 }

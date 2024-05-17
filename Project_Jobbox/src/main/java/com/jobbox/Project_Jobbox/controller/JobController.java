@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,7 @@ public class JobController {
 	@PostMapping("/postingJob")
     public ResponseEntity<Job> postJob(@RequestBody Job job) {
         Job savedJob = jobService.postJob(job);
+        
         return new ResponseEntity<>(savedJob, HttpStatus.CREATED);
     }
 	
@@ -45,16 +47,20 @@ public class JobController {
 		
 	}
 	
-//	@GetMapping("/jobsPostedByHrEmail")
-//	public ResponseEntity<List<Job>> showJobbyHrEmail(@RequestParam String userEmail)	{
-//		List<Job> jobs=jobService.getJobsByHrEmail(userEmail);
-//		System.out.println(userEmail);
+	@GetMapping("/jobsPostedByHrEmail")
+	public ResponseEntity<List<Job>> showJobbyHrEmail(@RequestParam String userEmail)	{
+		List<Job> jobs=jobService.getJobsByHrEmail(userEmail);
+		System.out.println(userEmail);
 //		for(Job job:jobs)
 //		{
 //			System.out.println(job.toString());
 //		}
-//		return new ResponseEntity<List<Job>>(jobs, HttpStatus.OK);	
-//	}
+		return new ResponseEntity<List<Job>>(jobs, HttpStatus.OK);	
+	}
+//	@GetMapping("/jobsPostedByHrEmail")
+//    public List<Job> getJobs(@RequestParam String userEmail, @RequestParam String companyName) {
+//        return jobService.getJobsByHrEmailAndCompanyName(userEmail, companyName);
+//    }
 	
 	@GetMapping("/jobsPostedByHrEmaileachCompany")
 	public ResponseEntity<List<Job>> getJobbyHrEmailEchCompany(@RequestParam String userEmail)	{
@@ -86,5 +92,25 @@ public class JobController {
 		return new ResponseEntity<Job>(jobService.getJobByJobId(jobId), HttpStatus.OK);
 	}
 
+    @PutMapping("/updateJob")
+	public ResponseEntity<String> updateJobDetails(@RequestParam int jobId,@RequestBody Job jobDetails){
+			Job existingJob = jobService.getJobByJobId(jobId);
+			
+	            existingJob.setJobTitle(jobDetails.getJobTitle());
+	            existingJob.setJobType(jobDetails.getJobType());
+
+	            existingJob.setPostingDate(jobDetails.getPostingDate());
+	            existingJob.setSkills(jobDetails.getSkills());
+	            existingJob.setApplicationDeadline(jobDetails.getApplicationDeadline());
+	            existingJob.setNumberOfPosition(jobDetails.getNumberOfPosition());
+	            existingJob.setJobsummary(jobDetails.getJobsummary());
+	           existingJob=jobService.postJob(existingJob);
+	           
+	           return new ResponseEntity<String>("Updated Succesfully", HttpStatus.OK);
+	        }
+	        
+
+	
+	
 
 }

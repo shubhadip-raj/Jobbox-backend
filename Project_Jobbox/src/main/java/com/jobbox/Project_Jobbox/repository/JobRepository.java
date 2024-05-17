@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.jobbox.Project_Jobbox.entity.Job;
@@ -18,9 +19,11 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
 //	@Query("select job.companyName from Job job where job.hrName=?1")
 //	String getCompamyName(String userName);
 
-//	@Query("select job from Job job where job.hrEmail=?1 ")
-//	List<Job> getJobsByHrEmail(String userEmail);
+	@Query("select job from Job job where job.userEmail=?1 ")
+	List<Job> getJobsByHrEmail(String userEmail);
 
+//	@Query("SELECT j FROM Job j WHERE j.userEmail = :userEmail AND j.companyName = :companyName")
+//    List<Job> findByHrEmailAndCompanyName(@Param("userEmail") String userEmail, @Param("companyName") String companyName);
 
 	@Query("select job from Job job where job.jobId=?1")
 	List<Job> getJobByJobId(int jobId);
@@ -41,5 +44,8 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
 	
 	@Query("select job.jobTitle from Job job where job.jobId=?1")
 	String getJobTitleByJobId(int jobId);
+
+
+	
 
 }
